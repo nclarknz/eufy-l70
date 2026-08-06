@@ -1,8 +1,8 @@
-# Eufy X8 Robot Vacuum — Home Assistant Integration
+# Eufy L70 Robot Vacuum — Home Assistant Integration
 
 A Home Assistant custom integration for Eufy X8 robot vacuums using the **Tuya v3.3 local protocol** (LAN, no cloud dependency after setup). Tested on the T2262 and T2262EV (X8 Pro).
 
-> **Why this exists**: The X8 (T2262 / T2262EV) is on Eufy's older Tuya platform, not the AIOT/protobuf path the modern fleet uses. The Anker AIOT MQTT broker denies subscription for these device IDs (`SUBACK 0x80`), but the X8 is still reachable via Eufy's older V1 cloud API — and that's the path my own [`eufy-clean`](https://github.com/8none1/eufy-clean) fork uses to drive it. It works for the basics. What it lacks is a `goto` service (the killer feature for "park next to the bin" automations) and it depends on the Anker cloud being up.
+> **Why this exists**: The L70 (T2190 ) is on Eufy's older Tuya platform, not the AIOT/protobuf path the modern fleet uses. The Anker AIOT MQTT broker denies subscription for these device IDs (`SUBACK 0x80`), but the X8 is still reachable via Eufy's older V1 cloud API — and that's the path my own [`eufy-clean`](https://github.com/8none1/eufy-clean) fork uses to drive it. It works for the basics. What it lacks is a `goto` service (the killer feature for "park next to the bin" automations) and it depends on the Anker cloud being up.
 >
 > The original Tuya-based community integration ([`mitchellrj/eufy_robovac`](https://github.com/mitchellrj/eufy_robovac)) is dormant — last commit June 2020 — and stopped working on the X8 at some point in the past, possibly due to firmware changes.
 >
