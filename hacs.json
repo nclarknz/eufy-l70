@@ -1,5 +1,5 @@
 {
-  "name": "Eufy X8 Robot Vacuum",
+  "name": "Eufy Generic Robot Vacuum",
   "content_in_root": false,
   "homeassistant": "2024.1.0"
 }

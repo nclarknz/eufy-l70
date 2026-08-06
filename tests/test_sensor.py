@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from custom_components.eufy_x8.sensor import (
+from custom_components.eufyvac.sensor import (
     ActivitySensor,
     BatterySensor,
     CleaningAreaSensor,
@@ -11,7 +11,7 @@ from custom_components.eufy_x8.sensor import (
     DetailedStatusSensor,
     ErrorSensor,
 )
-from custom_components.eufy_x8.const import (
+from custom_components.eufyvac.const import (
     DPS_BATTERY,
     DPS_CLEANING_AREA,
     DPS_CLEANING_TIME,

@@ -74,7 +74,7 @@ def _print_coords(x: int, y: int, source: str) -> None:
     print(f"  x={x}  y={y}")
     print("=" * 50)
     print()
-    print("Use in HA service call (eufy_x8.goto):")
+    print("Use in HA service call (eufyvac.goto):")
     print(f"  x: {x}")
     print(f"  y: {y}")
     print()

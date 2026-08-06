@@ -49,7 +49,7 @@ def device_info(self) -> DeviceInfo:
         identifiers={(DOMAIN, self._entry.data["device_id"])},
         name=self._entry.data[CONF_DEVICE_NAME],
         manufacturer="Eufy",
-        model="X8 / X8 Pro",
+        model="L70",
     )
 ```
 

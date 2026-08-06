@@ -74,7 +74,7 @@ class _Base(CoordinatorEntity[EufyVacCoordinator], SensorEntity):
             identifiers={(DOMAIN, entry.data["device_id"])},
             name=device_name,
             manufacturer="Eufy",
-            model="X8 / X8 Pro",
+            model="L70",
         )
 
 

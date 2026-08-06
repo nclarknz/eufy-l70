@@ -5,7 +5,7 @@ from unittest.mock import patch
 
 import pytest
 
-from custom_components.eufy_x8.api.local import (
+from custom_components.eufyvac.api.local import (
     InvalidKey,
     Message,
     TuyaCipher,
@@ -128,7 +128,7 @@ def test_tuya_device_rejects_long_key():
 def test_tuya_device_update_local_key_rejects_bad_key():
     # Patch asyncio.create_task to prevent process_queue from spawning a
     # persistent background task that outlives the (synchronous) test.
-    with patch("custom_components.eufy_x8.api.local.asyncio.create_task"):
+    with patch("custom_components.eufyvac.api.local.asyncio.create_task"):
         dev = TuyaDevice(
             device_id="abc",
             host="192.168.1.1",

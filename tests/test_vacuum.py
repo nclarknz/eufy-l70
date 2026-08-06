@@ -1,12 +1,12 @@
-"""Tests for the EufyX8Vacuum entity."""
+"""Tests for the Eufy Generic Vac entity."""
 import asyncio
 from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 from homeassistant.components.vacuum import VacuumEntityFeature
 
-from custom_components.eufy_x8.vacuum import EufyX8Vacuum, FEATURES
-from custom_components.eufy_x8.const import (
+from custom_components.eufyvac.vacuum import EufyVacuum, FEATURES
+from custom_components.eufyvac.const import (
     DPS_ACTIVATE,
     DPS_CLEAN_SPEED,
     DPS_LOCATE,
@@ -44,7 +44,7 @@ def config_entry():
 
 @pytest.fixture
 def vacuum(mock_coordinator, config_entry):
-    return EufyX8Vacuum(mock_coordinator, config_entry)
+    return EufyVacuum(mock_coordinator, config_entry)
 
 
 # ---------------------------------------------------------------------------

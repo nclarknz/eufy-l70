@@ -1,13 +1,13 @@
-"""Tests for EufyX8Coordinator — key rotation and update logic."""
+"""Tests for EufyVacCoordinator — key rotation and update logic."""
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
 from homeassistant.helpers.update_coordinator import UpdateFailed
 
-from custom_components.eufy_x8.api.local import InvalidKey, TuyaException
-from custom_components.eufy_x8.coordinator import EufyX8Coordinator
-from custom_components.eufy_x8.const import (
+from custom_components.eufyvac.api.local import InvalidKey, TuyaException
+from custom_components.eufyvac.coordinator import EufyVacCoordinator
+from custom_components.eufyvac.const import (
     CONF_LOCAL_KEY,
     DPS_WORK_STATUS,
     WORK_STATUS_CHARGING,
@@ -38,8 +38,8 @@ def mock_entry():
 
 @pytest.fixture
 def coordinator(mock_hass, mock_entry):
-    with patch("custom_components.eufy_x8.coordinator.EufyAuth"):
-        c = EufyX8Coordinator(mock_hass, mock_entry)
+    with patch("custom_components.eufyvac.coordinator.EufyAuth"):
+        c = EufyVacCoordinator(mock_hass, mock_entry)
     return c
 
 
@@ -60,7 +60,7 @@ async def test_invalid_key_triggers_refresh_and_retries(coordinator, mock_entry)
     coordinator._device.update_local_key = MagicMock()
 
     with patch(
-        "custom_components.eufy_x8.coordinator.get_local_key",
+        "custom_components.eufyvac.coordinator.get_local_key",
         new_callable=AsyncMock,
         return_value=new_key,
     ):
@@ -83,7 +83,7 @@ async def test_invalid_key_then_tuya_exception_raises_update_failed(coordinator)
     coordinator._device.update_local_key = MagicMock()
 
     with patch(
-        "custom_components.eufy_x8.coordinator.get_local_key",
+        "custom_components.eufyvac.coordinator.get_local_key",
         new_callable=AsyncMock,
         return_value="newkey12345abcde",
     ):
@@ -99,7 +99,7 @@ async def test_refresh_key_logs_warning_and_returns_existing_on_cloud_failure(
     original_key = mock_entry.data[CONF_LOCAL_KEY]
 
     with patch(
-        "custom_components.eufy_x8.coordinator.get_local_key",
+        "custom_components.eufyvac.coordinator.get_local_key",
         new_callable=AsyncMock,
         side_effect=Exception("cloud unreachable"),
     ):
@@ -114,7 +114,7 @@ async def test_refresh_key_no_op_if_key_unchanged(coordinator, mock_entry):
     existing_key = mock_entry.data[CONF_LOCAL_KEY]
 
     with patch(
-        "custom_components.eufy_x8.coordinator.get_local_key",
+        "custom_components.eufyvac.coordinator.get_local_key",
         new_callable=AsyncMock,
         return_value=existing_key,
     ):

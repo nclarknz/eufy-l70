@@ -1,4 +1,4 @@
-# Eufy X8 Tools
+# Eufy Vacuum Tools
 
 Standalone diagnostic and setup scripts for the `eufy_L70` Home Assistant integration. These help you discover goto coordinates for locations in your home, test the local protocol, and debug without needing HA running.
 

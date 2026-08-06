@@ -3,7 +3,7 @@ goto:
   description: Send the robot to a specific location in its map coordinate system.
   target:
     entity:
-      integration: eufy_x8
+      integration: eufyvac
       domain: vacuum
   fields:
     x:

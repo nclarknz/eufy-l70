@@ -1,4 +1,4 @@
-"""Global fixtures for eufy_x8 integration tests."""
+"""Global fixtures for eufy_L70 integration tests."""
 import pytest
 
 

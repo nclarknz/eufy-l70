@@ -1,4 +1,4 @@
-"""Eufy X8 Robot Vacuum integration."""
+"""Eufy Generic Robot Vacuum integration."""
 from __future__ import annotations
 
 import logging
@@ -10,7 +10,7 @@ from homeassistant.helpers import config_validation as cv
 
 from .api.discovery import TuyaLocalDiscovery
 from .const import CONF_DEVICE_ID, CONF_DEVICE_IP, CONF_LOCAL_KEY, DOMAIN
-from .coordinator import EufyX8Coordinator
+from .coordinator import EufyVacCoordinator
 
 CONFIG_SCHEMA = cv.empty_config_schema(DOMAIN)
 
@@ -41,7 +41,7 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
                 else:
                     # Same IP — robot is broadcasting (online). If we were backed off,
                     # reset immediately so we reconnect without waiting out the backoff.
-                    coordinator: EufyX8Coordinator | None = hass.data[DOMAIN].get(entry.entry_id)
+                    coordinator: EufyVacCoordinator | None = hass.data[DOMAIN].get(entry.entry_id)
                     if coordinator is not None and coordinator._device is not None:
                         if coordinator._device._backoff:
                             _LOGGER.info("Robot %s back online — resetting backoff", entry.title)
@@ -69,7 +69,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     if discovery:
         discovery.add_device(entry.data[CONF_DEVICE_ID], entry.data.get(CONF_DEVICE_IP))
 
-    coordinator = EufyX8Coordinator(hass, entry)
+    coordinator = EufyVacCoordinator(hass, entry)
     entry.async_on_unload(entry.add_update_listener(coordinator.async_entry_updated))
     await coordinator.async_config_entry_first_refresh()
     hass.data[DOMAIN][entry.entry_id] = coordinator
@@ -85,6 +85,6 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
     if ok:
-        coordinator: EufyX8Coordinator = hass.data[DOMAIN].pop(entry.entry_id)
+        coordinator: EufyVacCoordinator = hass.data[DOMAIN].pop(entry.entry_id)
         await coordinator.async_shutdown()
     return ok

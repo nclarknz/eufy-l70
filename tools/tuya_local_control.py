@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Local Tuya protocol control for Eufy X8 robot vacuums.
+Local Tuya protocol control for Eufy robot vacuums.
 
 Communicates directly with the robot over your LAN using Tuya v3.3 protocol
 (port 6668).  No cloud connection required once you have the local key.
@@ -42,7 +42,7 @@ import time
 
 import tinytuya
 
-# DPS numbers for Eufy X8 (Tuya v3.3 local protocol)
+# DPS numbers for Eufy Vacuums (Tuya v3.3 local protocol)
 DPS_POWER         = "1"    # bool
 DPS_ACTIVATE      = "2"    # bool: start/stop clean
 DPS_WORK_MODE     = "5"    # str: "auto", "Nosweep", "Edge", "Spot"
@@ -258,7 +258,7 @@ def cmd_monitor(d: tinytuya.Device, duration: int = 120) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Control an Eufy X8 robot via local Tuya protocol",
+        description="Control an Eufy Generic robot via local Tuya protocol",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:

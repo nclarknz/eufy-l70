@@ -1,7 +1,7 @@
 """Tests for constants and mappings in const.py."""
 import pytest
 
-from custom_components.eufy_x8.const import (
+from custom_components.eufyvac.const import (
     ACTIVITY_MAP,
     FAN_SPEED_FROM_LABEL,
     FAN_SPEED_LABELS,
