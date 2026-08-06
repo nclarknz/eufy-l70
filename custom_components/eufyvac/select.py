@@ -9,7 +9,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import CONF_DEVICE_NAME, DOMAIN, DPS_WORK_MODE
-from .coordinator import EufyX8Coordinator
+from .coordinator import EufyVacCoordinator
 
 WORK_MODES = ["auto", "Edge", "Spot", "Nosweep"]
 WORK_MODE_LABELS = {
@@ -25,15 +25,15 @@ async def async_setup_entry(
     entry: ConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
-    coordinator: EufyX8Coordinator = hass.data[DOMAIN][entry.entry_id]
+    coordinator: EufyVacCoordinator = hass.data[DOMAIN][entry.entry_id]
     async_add_entities([WorkModeSelect(coordinator, entry)])
 
 
-class WorkModeSelect(CoordinatorEntity[EufyX8Coordinator], SelectEntity):
+class WorkModeSelect(CoordinatorEntity[EufyVacCoordinator], SelectEntity):
     _attr_has_entity_name = True
     _attr_icon = "mdi:robot-vacuum"
 
-    def __init__(self, coordinator: EufyX8Coordinator, entry: ConfigEntry) -> None:
+    def __init__(self, coordinator: EufyVacCoordinator, entry: ConfigEntry) -> None:
         super().__init__(coordinator)
         self._attr_name = "Work Mode"
         self._attr_unique_id = f"{entry.data['device_id']}_work_mode"
@@ -42,7 +42,7 @@ class WorkModeSelect(CoordinatorEntity[EufyX8Coordinator], SelectEntity):
             identifiers={(DOMAIN, entry.data["device_id"])},
             name=entry.data[CONF_DEVICE_NAME],
             manufacturer="Eufy",
-            model="X8 / X8 Pro",
+            model="L70",
         )
 
     @property
