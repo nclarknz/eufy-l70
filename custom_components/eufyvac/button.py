@@ -5,7 +5,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .coordinator import EufyX8Coordinator
+from .coordinator import EufyVacCoordinator
 from .const import DOMAIN
 
 

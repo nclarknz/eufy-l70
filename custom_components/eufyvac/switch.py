@@ -14,7 +14,7 @@ from .const import (
     DPS_AUTO_RETURN,
     DPS_BOOST_IQ,
 )
-from .coordinator import EufyX8Coordinator
+from .coordinator import EufyVacCoordinator
 
 
 async def async_setup_entry(
@@ -22,7 +22,7 @@ async def async_setup_entry(
     entry: ConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
-    coordinator: EufyX8Coordinator = hass.data[DOMAIN][entry.entry_id]
+    coordinator: EufyVacCoordinator = hass.data[DOMAIN][entry.entry_id]
     name = entry.data[CONF_DEVICE_NAME]
     async_add_entities([
         BoostIQSwitch(coordinator, entry, name),
@@ -30,7 +30,7 @@ async def async_setup_entry(
     ])
 
 
-class _DPSSwitch(CoordinatorEntity[EufyX8Coordinator], SwitchEntity):
+class _DPSSwitch(CoordinatorEntity[EufyVacCoordinator], SwitchEntity):
     _attr_has_entity_name = True
 
     def __init__(self, coordinator, entry, device_name, suffix, unique_suffix, dps):
@@ -42,7 +42,7 @@ class _DPSSwitch(CoordinatorEntity[EufyX8Coordinator], SwitchEntity):
             identifiers={(DOMAIN, entry.data["device_id"])},
             name=device_name,
             manufacturer="Eufy",
-            model="X8 / X8 Pro",
+            model="L70",
         )
 
     @property

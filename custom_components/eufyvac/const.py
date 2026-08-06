@@ -1,10 +1,10 @@
-DOMAIN = "eufy_x8"
+DOMAIN = "eufyvac"
 
 # Eufy auth
 EUFY_LOGIN_URL = "https://home-api.eufylife.com/v1/user/email/login"
 EUFY_USER_AGENT = "EufyHome-Android-3.1.3-753"
 
-# DPS numbers (Eufy X8, Tuya v3.3 local protocol)
+# DPS numbers (Eufy L70, Tuya v3.3 local protocol)
 DPS_POWER           = "1"    # bool
 DPS_ACTIVATE        = "2"    # bool: start/stop clean
 DPS_WORK_MODE       = "5"    # str: "auto" | "Nosweep" | "Edge" | "Spot"

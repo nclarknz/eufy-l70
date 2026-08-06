@@ -43,7 +43,7 @@ def _make_entry_data(
     }
 
 
-class EufyX8ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
+class EufyVacConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     VERSION = 1
 
     async def async_step_user(
@@ -178,10 +178,10 @@ class EufyX8ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     @staticmethod
     @callback
     def async_get_options_flow(config_entry):
-        return EufyX8OptionsFlow(config_entry)
+        return EufyVacOptionsFlow(config_entry)
 
 
-class EufyX8OptionsFlow(config_entries.OptionsFlow):
+class EufyVacOptionsFlow(config_entries.OptionsFlow):
     """Allow the user to manually override the IP address."""
 
     def __init__(self, config_entry: config_entries.ConfigEntry) -> None:

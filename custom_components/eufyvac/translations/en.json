@@ -2,7 +2,7 @@
   "config": {
     "step": {
       "user": {
-        "title": "Eufy X8 — Sign In",
+        "title": "Eufy — Sign In",
         "data": {
           "email": "Eufy account email",
           "password": "Password"

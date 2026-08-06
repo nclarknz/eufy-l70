@@ -1,14 +1,14 @@
 {
-  "domain": "eufy_x8",
-  "name": "Eufy X8 Robot Vacuum",
+  "domain": "eufyvac",
+  "name": "Eufy L70 Robot Vacuum",
   "codeowners": [
-    "@8none1"
+    "@ndsitnz"
   ],
   "config_flow": true,
   "dependencies": [],
-  "documentation": "https://github.com/8none1/eufy-x8",
+  "documentation": "https://github.com/nclarknz/eufy-l70",
   "iot_class": "local_polling",
-  "issue_tracker": "https://github.com/8none1/eufy-x8/issues",
+  "issue_tracker": "https://github.com/nclarknz/eufy-l70/issues",
   "requirements": [],
-  "version": "0.1.29"
+  "version": "0.1.30"
 }

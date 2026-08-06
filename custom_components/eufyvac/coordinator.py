@@ -1,4 +1,4 @@
-"""DataUpdateCoordinator for Eufy X8."""
+"""DataUpdateCoordinator for Eufy Vac."""
 from __future__ import annotations
 
 import logging
@@ -28,7 +28,7 @@ PING_INTERVAL = 10
 TIMEOUT = 5
 
 
-class EufyX8Coordinator(DataUpdateCoordinator[dict[str, Any]]):
+class EufyVacCoordinator(DataUpdateCoordinator[dict[str, Any]]):
 
     def __init__(self, hass: HomeAssistant, entry: ConfigEntry) -> None:
         self._entry = entry

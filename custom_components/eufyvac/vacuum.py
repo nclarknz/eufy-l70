@@ -1,4 +1,4 @@
-"""Vacuum entity for Eufy X8."""
+"""Vacuum entity for Eufy L70."""
 from __future__ import annotations
 
 import asyncio
@@ -30,7 +30,7 @@ from .const import (
     FAN_SPEED_LABELS,
     FAN_SPEED_TO_LABEL,
 )
-from .coordinator import EufyX8Coordinator
+from .coordinator import EufyVacCoordinator
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -52,8 +52,8 @@ async def async_setup_entry(
     entry: ConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
-    coordinator: EufyX8Coordinator = hass.data[DOMAIN][entry.entry_id]
-    async_add_entities([EufyX8Vacuum(coordinator, entry)])
+    coordinator: EufyVacCoordinator = hass.data[DOMAIN][entry.entry_id]
+    async_add_entities([EufyVacuum(coordinator, entry)])
 
     platform = async_get_current_platform()
     platform.async_register_entity_service(
@@ -75,14 +75,14 @@ async def async_setup_entry(
     )
 
 
-class EufyX8Vacuum(CoordinatorEntity[EufyX8Coordinator], StateVacuumEntity):
+class EufyVacuum(CoordinatorEntity[EufyVacCoordinator], StateVacuumEntity):
 
     _attr_has_entity_name = True
     _attr_name = None   # vacuum IS the device; HA uses the device name directly
     _attr_fan_speed_list = FAN_SPEED_LABELS
     _attr_supported_features = FEATURES
 
-    def __init__(self, coordinator: EufyX8Coordinator, entry: ConfigEntry) -> None:
+    def __init__(self, coordinator: EufyVacCoordinator, entry: ConfigEntry) -> None:
         super().__init__(coordinator)
         self._entry = entry
         self._attr_unique_id = entry.data["device_id"]
@@ -90,7 +90,7 @@ class EufyX8Vacuum(CoordinatorEntity[EufyX8Coordinator], StateVacuumEntity):
             identifiers={(DOMAIN, entry.data["device_id"])},
             name=entry.data[CONF_DEVICE_NAME],
             manufacturer="Eufy",
-            model="X8 / X8 Pro",
+            model="L70",
         )
 
     @property

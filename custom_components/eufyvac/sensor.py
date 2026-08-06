@@ -26,7 +26,7 @@ from .const import (
     DPS_WORK_STATUS,
     DPS_WORK_STATUS_2,
 )
-from .coordinator import EufyX8Coordinator
+from .coordinator import EufyVacCoordinator
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -50,7 +50,7 @@ async def async_setup_entry(
     entry: ConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
-    coordinator: EufyX8Coordinator = hass.data[DOMAIN][entry.entry_id]
+    coordinator: EufyVacCoordinator = hass.data[DOMAIN][entry.entry_id]
     name = entry.data[CONF_DEVICE_NAME]
     entities = [
         BatterySensor(coordinator, entry, name),
@@ -63,7 +63,7 @@ async def async_setup_entry(
     async_add_entities(entities)
 
 
-class _Base(CoordinatorEntity[EufyX8Coordinator], SensorEntity):
+class _Base(CoordinatorEntity[EufyVacCoordinator], SensorEntity):
     _attr_has_entity_name = True
 
     def __init__(self, coordinator, entry, device_name, suffix, unique_suffix):
