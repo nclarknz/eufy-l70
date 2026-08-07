@@ -30,6 +30,36 @@ Goto coordinates:
 
 Dependencies:
     pip install tinytuya
+
+    Exmaple output from cmd_status:
+    Current status:
+  DPS    2: False
+  DPS    5: Nosweep
+  DPS   15: completed
+  DPS  101: True
+  DPS  102: Quiet
+  DPS  103: False
+  DPS  104: 100
+  DPS  105: MopLow
+  DPS  106: 0
+  DPS  107: False
+  DPS  108: [2936,-791,-38]
+  DPS  109: 45
+  DPS  110: 0
+  DPS  111: 45
+  DPS  112: 178871
+  DPS  113: 51989
+  DPS  114: 51989
+  DPS  118: True
+  DPS  119: 178871
+  DPS  120: 2598
+  DPS  122: Nosweep
+  DPS  127: 51989
+  DPS  129: False
+  DPS  132: 46
+  DPS  133: 0
+  DPS  134: 1
+
 """
 from __future__ import annotations
 
@@ -220,23 +250,29 @@ def cmd_last_clean(d: tinytuya.Device) -> None:
             pass
 
 
-def cmd_monitor(d: tinytuya.Device, duration: int = 120) -> None:
+def cmd_monitor(d: tinytuya.Device, duration: int = 120, log_path: str | None = None) -> None:
     """Watch all DPS updates in real time."""
-    d.set_socketPersistent(True)
-    d.set_socketTimeout(2)
-    d.set_socketRetryLimit(0)
+    # d.set_socketPersistent(True)
+    # d.set_socketTimeout(2)
+    # d.set_socketRetryLimit(0)
 
     print(f"Monitoring for {duration}s ... (Ctrl+C to stop)")
-    print()
+    print(d)
 
     last_heartbeat = time.time()
     start = time.time()
+    log_file = None
 
     try:
+        if log_path:
+            log_file = open(log_path, "a", encoding="utf-8")
+            print(f"Logging monitor output to: {log_path}")
+
         while time.time() - start < duration:
             elapsed = time.time() - start
             try:
-                msg = d.receive()
+                msg = d.status()
+                #print(msg)
             except Exception:
                 msg = None
                 time.sleep(0.1)
@@ -244,12 +280,23 @@ def cmd_monitor(d: tinytuya.Device, duration: int = 120) -> None:
             if msg and "dps" in msg:
                 decoded = _decode_dps(msg["dps"])
                 print(f"[{elapsed:6.1f}s] {decoded}")
+                if log_file is not None:
+                    entry = {
+                        "timestamp": round(time.time(), 3),
+                        "elapsed": round(elapsed, 3),
+                        "dps": decoded,
+                    }
+                    log_file.write(json.dumps(entry, ensure_ascii=False) + "\n")
+                    log_file.flush()
 
-            if time.time() - last_heartbeat >= 10:
-                d.heartbeat()
-                last_heartbeat = time.time()
+            # if time.time() - last_heartbeat >= 10:
+            #     d.heartbeat()
+            #     last_heartbeat = time.time()
     except KeyboardInterrupt:
         print(f"\nStopped after {time.time()-start:.0f}s.")
+    finally:
+        if log_file is not None:
+            log_file.close()
 
 
 # ---------------------------------------------------------------------------
@@ -270,6 +317,8 @@ Examples:
     parser.add_argument("--device-ip",  required=True, help="Robot IP address")
     parser.add_argument("--device-id",  required=True, help="Tuya device ID")
     parser.add_argument("--local-key",  required=True, help="Tuya local key")
+    parser.add_argument("--monitor-log", dest="monitor_log",
+                        help="Optional JSONL file to append monitor output")
     parser.add_argument("command", nargs="+",
                         help="Command: status | home | goto <x> <y> | last_clean | monitor [seconds]")
     args = parser.parse_args()
@@ -290,7 +339,7 @@ Examples:
         cmd_last_clean(d)
     elif cmd == "monitor":
         duration = int(rest[0]) if rest else 120
-        cmd_monitor(d, duration)
+        cmd_monitor(d, duration, args.monitor_log)
     else:
         parser.error(f"Unknown command '{cmd}'. "
                      f"Valid commands: status, home, goto, last_clean, monitor")
